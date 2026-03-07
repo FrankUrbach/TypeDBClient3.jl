@@ -4,4 +4,6 @@ build/
 *.dylib
 *.so
 *.dll
-# Artifacts.toml is intentionally tracked in git (not ignored here)
+# Manifest.toml is NOT tracked — each Julia version resolves its own.
+# Artifacts.toml is intentionally tracked in git (not ignored here).
+Manifest.toml
