@@ -1,18 +1,18 @@
 name = "TypeDBClient"
 uuid = "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
-version = "0.1.0"
 authors = []
+version = "0.1.0"
 
 [deps]
 Artifacts = "56f22d72-fd6d-98f1-02f0-08ddc0907c33"
-Libdl     = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
-Pkg       = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
+Libdl = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
+Pkg = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
+
+[compat]
+julia = "1.6"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [targets]
 test = ["Test"]
-
-[compat]
-julia = "1.6"

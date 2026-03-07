@@ -20,4 +20,4 @@ if !isempty(TEST_ADDRESS)
     end
 else
     @info "Skipping integration tests (set TYPEDB_TEST_ADDRESS=host:port to enable)"
-end
+end;
