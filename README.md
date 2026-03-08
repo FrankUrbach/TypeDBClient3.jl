@@ -1,7 +1,7 @@
-# TypeDBClient_2.jl
+# TypeDBClient3.jl
 
-[![Build Status](https://github.com/FrankUrbach/TypeDBClient_2.jl/actions/workflows/CI.yml/badge.svg)](https://github.com/FrankUrbach/TypeDBClient_2.jl/actions)
-[![v0.0.1](https://img.shields.io/github/v/release/FrankUrbach/TypeDBClient_2.jl)](https://github.com/FrankUrbach/TypeDBClient_2.jl/releases)
+[![Build Status](https://github.com/FrankUrbach/TypeDBClient3.jl/actions/workflows/CI.yml/badge.svg)](https://github.com/FrankUrbach/TypeDBClient3.jl/actions)
+[![v0.0.1](https://img.shields.io/github/v/release/FrankUrbach/TypeDBClient3.jl)](https://github.com/FrankUrbach/TypeDBClient3.jl/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A Julia FFI client for [TypeDB 3.x](https://typedb.com), wrapping the official
@@ -62,7 +62,7 @@ The native library can be obtained in one of two ways:
 
 ```julia
 using Pkg
-Pkg.add(url="https://github.com/FrankUrbach/TypeDBClient_2.jl")
+Pkg.add(url="https://github.com/FrankUrbach/TypeDBClient3.jl")
 ```
 
 After installing, register the native library once:
@@ -202,7 +202,7 @@ query answers – is implemented and tested.
 ## Contributing
 
 Contributions and feedback are welcome. Please open an issue or pull request
-on [GitHub](https://github.com/FrankUrbach/TypeDBClient_2.jl).
+on [GitHub](https://github.com/FrankUrbach/TypeDBClient3.jl).
 
 For questions about TypeDB itself, visit the
 [TypeDB Discord](https://typedb.com/discord) or
