@@ -101,7 +101,7 @@ jobs:
             LIB=$(find "$RUNNER_TEMP/typedb-lib" -name "libtypedb_driver_clib.dylib" | head -1)
           fi
           echo "Found C library: $LIB"
-          TYPEDB_DRIVER_LIB="$LIB" julia --project -e 'using Pkg; Pkg.build("TypeDBClient")'
+          TYPEDB_DRIVER_LIB="$LIB" julia --project -e 'using Pkg; Pkg.build("TypeDBClient3")'
 
       # ── Start TypeDB server (in background so unit tests run concurrently) ───
       - name: Start TypeDB (Linux – Docker)
@@ -127,7 +127,7 @@ jobs:
 
       # ── Unit tests run while TypeDB is starting up ───────────────────────────
       - name: Unit tests
-        run: julia --project -e 'using Pkg; Pkg.test("TypeDBClient")'
+        run: julia --project -e 'using Pkg; Pkg.test("TypeDBClient3")'
 
       # ── Wait for TypeDB to be ready before integration tests ─────────────────
       - name: Wait for TypeDB
@@ -151,7 +151,7 @@ jobs:
       - name: Integration tests
         env:
           TYPEDB_TEST_ADDRESS: localhost:1729
-        run: julia --project -e 'using Pkg; Pkg.test("TypeDBClient")'
+        run: julia --project -e 'using Pkg; Pkg.test("TypeDBClient3")'
 
       # ── Show TypeDB server log on failure (macOS) ────────────────────────────
       - name: TypeDB server log (on failure)
@@ -199,8 +199,8 @@ jobs:
         run: |
           LIB=$(find "$RUNNER_TEMP/typedb-lib" -name "typedb_driver_clib.dll" | head -1)
           echo "Found C library: $LIB"
-          TYPEDB_DRIVER_LIB="$LIB" julia --project -e 'using Pkg; Pkg.build("TypeDBClient")'
+          TYPEDB_DRIVER_LIB="$LIB" julia --project -e 'using Pkg; Pkg.build("TypeDBClient3")'
 
       # ── Unit tests only (no TypeDB server available on Windows CI) ───────────
       - name: Unit tests
-        run: julia --project -e 'using Pkg; Pkg.test("TypeDBClient")'
+        run: julia --project -e 'using Pkg; Pkg.test("TypeDBClient3")'
