@@ -1,4 +1,4 @@
-module TypeDBClient
+module TypeDBClient3
 
 # ─── Load deps (provides `libtypedb` and `check_deps`) ────────────────────────
 using Artifacts, Libdl, Dates
@@ -8,7 +8,7 @@ include_dependency(_ARTIFACTS_TOML)   # invalidate precompile cache when Artifac
 
 function _find_libtypedb()
     isfile(_ARTIFACTS_TOML) || return ""
-    hash = artifact_hash("TypeDBClient_jll", _ARTIFACTS_TOML)
+    hash = artifact_hash("TypeDBClient3_jll", _ARTIFACTS_TOML)
     hash === nothing && return ""
     artifact_exists(hash) || return ""
     dir = artifact_path(hash)
@@ -20,7 +20,7 @@ const libtypedb = _find_libtypedb()
 function check_deps()
     isempty(libtypedb) &&
         error("TypeDB driver artifact not found.\n" *
-              "Run `Pkg.build(\"TypeDBClient\")` after setting " *
+              "Run `Pkg.build(\"TypeDBClient3\")` after setting " *
               "TYPEDB_DRIVER_SRC or TYPEDB_DRIVER_LIB.")
     isfile(libtypedb) ||
         error("TypeDB driver library not found at: $(libtypedb)")
@@ -61,7 +61,7 @@ include("exports.jl")       # public exports
 # ─── Module initialiser ────────────────────────────────────────────────────────
 
 """
-    TypeDBClient.init_logging()
+    TypeDBClient3.init_logging()
 
 Enable the TypeDB driver's internal logging.  Behaviour is controlled by the
 environment variables `TYPEDB_DRIVER_LOG` and `TYPEDB_DRIVER_LOG_LEVEL`.
@@ -74,9 +74,9 @@ function __init__()
     try
         check_deps()
     catch err
-        @warn "TypeDBClient: library check failed – $(err)\n" *
-              "Run `Pkg.build(\"TypeDBClient\")` to rebuild."
+        @warn "TypeDBClient3: library check failed – $(err)\n" *
+              "Run `Pkg.build(\"TypeDBClient3\")` to rebuild."
     end
 end
 
-end # module TypeDBClient
+end # module TypeDBClient3

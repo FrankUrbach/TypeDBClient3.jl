@@ -1,8 +1,8 @@
 using Test
-using TypeDBClient
+using TypeDBClient3
 
 # ─── Unit tests (always run – no server required) ─────────────────────────────
-@testset "TypeDBClient Unit Tests" begin
+@testset "TypeDBClient3 Unit Tests" begin
     include("unit/test_error.jl")
     include("unit/test_strings.jl")
     include("unit/test_concept.jl")
@@ -13,7 +13,7 @@ const TEST_ADDRESS = get(ENV, "TYPEDB_TEST_ADDRESS", "")
 
 if !isempty(TEST_ADDRESS)
     @info "Running integration tests against $TEST_ADDRESS"
-    @testset "TypeDBClient Integration Tests" begin
+    @testset "TypeDBClient3 Integration Tests" begin
         include("integration/test_driver.jl")
         include("integration/test_databases.jl")
         include("integration/test_transaction.jl")

@@ -1,5 +1,5 @@
 using Test
-using TypeDBClient
+using TypeDBClient3
 using Dates
 
 # Unit tests for the rich Concept type system (concept.jl).
@@ -9,11 +9,11 @@ using Dates
 # These must match the C ABI exactly; wrong sizes → wrong reads / memory corruption.
 
 @testset "FFI struct sizes match C ABI (x86-64)" begin
-    @test sizeof(TypeDBClient.FFI.Decimal)             == 16   # { i64, u64 }
-    @test sizeof(TypeDBClient.FFI.DatetimeInNanos)     == 16   # { i64, u32, _pad }
-    @test sizeof(TypeDBClient.FFI.Duration)            == 16   # { u32, u32, u64 }
-    @test sizeof(TypeDBClient.FFI.DatetimeAndTimeZone) == 32   # { DatetimeInNanos(16), *char(8), i32(4), bool(1), _pad(3) }
-    @test sizeof(TypeDBClient.FFI.StringAndOptValue)   == 16   # { *char(8), *Concept(8) }
+    @test sizeof(TypeDBClient3.FFI.Decimal)             == 16   # { i64, u64 }
+    @test sizeof(TypeDBClient3.FFI.DatetimeInNanos)     == 16   # { i64, u32, _pad }
+    @test sizeof(TypeDBClient3.FFI.Duration)            == 16   # { u32, u32, u64 }
+    @test sizeof(TypeDBClient3.FFI.DatetimeAndTimeZone) == 32   # { DatetimeInNanos(16), *char(8), i32(4), bool(1), _pad(3) }
+    @test sizeof(TypeDBClient3.FFI.StringAndOptValue)   == 16   # { *char(8), *Concept(8) }
 end
 
 # ─── Decimal ──────────────────────────────────────────────────────────────────

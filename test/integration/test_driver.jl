@@ -1,5 +1,5 @@
 using Test
-using TypeDBClient
+using TypeDBClient3
 
 @testset "Driver – open / close" begin
     driver = TypeDBDriver(TEST_ADDRESS)

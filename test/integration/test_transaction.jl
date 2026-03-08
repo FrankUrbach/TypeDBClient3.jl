@@ -1,5 +1,5 @@
 using Test
-using TypeDBClient
+using TypeDBClient3
 
 const _TX_DB = "typedbclient_tx_test_$(getpid())"
 

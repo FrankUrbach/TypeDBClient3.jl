@@ -9,7 +9,7 @@
 
 module FFI
 
-using ..TypeDBClient: libtypedb
+using ..TypeDBClient3: libtypedb
 
 # All opaque handle types are Ptr{Cvoid} at the C ABI boundary.
 # Redeclare them locally so this sub-module is self-contained.

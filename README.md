@@ -74,13 +74,13 @@ export TYPEDB_DRIVER_LIB=/path/to/libtypedb_driver_clib.dylib
 # Option B – point to the typedb-driver source (builds via cargo)
 export TYPEDB_DRIVER_SRC=/path/to/typedb-driver
 
-julia -e 'using Pkg; Pkg.build("TypeDBClient")'
+julia -e 'using Pkg; Pkg.build("TypeDBClient3")'
 ```
 
 ## Quick Start
 
 ```julia
-using TypeDBClient
+using TypeDBClient3
 
 # Open a connection to a TypeDB 3.x server
 driver = TypeDBDriver("localhost:1729")
@@ -175,13 +175,13 @@ is_ok(answer)   # returns true on success
 **Unit tests** (no server required):
 
 ```bash
-julia --project -e 'using Pkg; Pkg.test("TypeDBClient")'
+julia --project -e 'using Pkg; Pkg.test("TypeDBClient3")'
 ```
 
 **Integration tests** (TypeDB 3.x server must be running):
 
 ```bash
-TYPEDB_TEST_ADDRESS=localhost:1729 julia --project -e 'using Pkg; Pkg.test("TypeDBClient")'
+TYPEDB_TEST_ADDRESS=localhost:1729 julia --project -e 'using Pkg; Pkg.test("TypeDBClient3")'
 ```
 
 ## Project Status
@@ -194,7 +194,7 @@ query answers – is implemented and tested.
 
 - [ ] Automatic binary installation via `TypeDBDriverClib_jll`
       (pending Yggdrasil PR [#13229](https://github.com/JuliaPackaging/Yggdrasil/pull/13229))
-- [ ] Registration in the Julia General Registry (`Pkg.add("TypeDBClient")`)
+- [ ] Registration in the Julia General Registry (`Pkg.add("TypeDBClient3")`)
 - [ ] Full concept API (attribute values, type hierarchy traversal)
 - [ ] Async query streaming
 - [ ] Documentation (Documenter.jl)

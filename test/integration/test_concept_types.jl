@@ -1,5 +1,5 @@
 using Test
-using TypeDBClient
+using TypeDBClient3
 using Dates
 
 # Integration tests for the rich Concept type system.

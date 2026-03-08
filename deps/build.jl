@@ -32,7 +32,7 @@ lib_path = let
         abspath(local_lib)
     else
         # Check if already registered and valid
-        h = Pkg.Artifacts.artifact_hash("TypeDBClient_jll", ARTIFACTS_TOML)
+        h = Pkg.Artifacts.artifact_hash("TypeDBClient3_jll", ARTIFACTS_TOML)
         if h !== nothing && Pkg.Artifacts.artifact_exists(h)
             candidate = joinpath(Pkg.Artifacts.artifact_path(h), "lib", LIB_NAME)
             if isfile(candidate)
@@ -53,6 +53,6 @@ hash = Pkg.Artifacts.create_artifact() do dir
     cp(lib_path, joinpath(dir, "lib", LIB_NAME); force=true)
 end
 
-Pkg.Artifacts.bind_artifact!(ARTIFACTS_TOML, "TypeDBClient_jll", hash;
+Pkg.Artifacts.bind_artifact!(ARTIFACTS_TOML, "TypeDBClient3_jll", hash;
                               platform=HostPlatform(), force=true)
 @info "Artifact registered → $(joinpath(Pkg.Artifacts.artifact_path(hash), "lib", LIB_NAME))"

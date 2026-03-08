@@ -4,7 +4,7 @@ using Test
 # These tests mock the FFI layer to avoid needing a real library.
 
 @testset "TypeDBError" begin
-    e = TypeDBClient.TypeDBError("TST001", "test error message")
+    e = TypeDBClient3.TypeDBError("TST001", "test error message")
     @test e isa Exception
     @test e.code    == "TST001"
     @test e.message == "test error message"
@@ -18,7 +18,7 @@ using Test
 end
 
 @testset "TypeDBError – default fields" begin
-    e = TypeDBClient.TypeDBError("", "")
+    e = TypeDBClient3.TypeDBError("", "")
     @test e.code    == ""
     @test e.message == ""
 end
