@@ -148,7 +148,8 @@ end
     @test CTX.query_answer_rows !== nothing
 end
 
-# ─── Answer row / concept accessors ────────────────────────────────────────── function _get_row(idx_str)
+# ─── Answer row / concept accessors ──────────────────────────────────────────
+function _get_row(idx_str)
     _materialise_rows()
     idx = parse(Int, idx_str) + 1  # 0-based -> 1-based
     CTX.query_answer_rows[idx]
