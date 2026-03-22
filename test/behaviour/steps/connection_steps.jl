@@ -4,7 +4,18 @@ using Test
 
 # ─── typedb starts ─────────────────────────────────────────────────────────────
 @step "typedb starts" function (ctx)
-    nothing
+    tmp = TypeDBDriver(TEST_ADDRESS)
+    for db in list_databases(tmp)
+        for attempt in 1:5
+            try
+                delete_database(db)
+                break
+            catch
+                attempt < 5 && Base.Libc.systemsleep(0.2)
+            end
+        end
+    end
+    close(tmp)
 end
 
 # ─── connection is open ────────────────────────────────────────────────────────
@@ -70,7 +81,7 @@ end
 end
 
 # ─── connection create database ───────────────────────────────────────────────
-@step r"^connection create database: (.+)$" function (ctx, name)
+@step r"^connection create database: ([^;]+)$" function (ctx, name)
     create_database(CTX.driver, strip(name))
 end
 
@@ -117,7 +128,7 @@ end
 end
 
 # ─── connection delete database ───────────────────────────────────────────────
-@step r"^connection delete database: (.+)$" function (ctx, name)
+@step r"^connection delete database: ([^;]+)$" function (ctx, name)
     delete_database(CTX.driver, strip(name))
 end
 
@@ -184,7 +195,7 @@ end
 end
 
 # ─── Open transaction (single) ────────────────────────────────────────────────
-@step r"^connection open (read|write|schema) transaction for database: (.+)$" function (ctx, type_name, db_name)
+@step r"^connection open (read|write|schema) transaction for database: ([^;]+)$" function (ctx, type_name, db_name)
     CTX.transaction = _open_tx(strip(db_name), _tx_type_from_name(type_name))
 end
 
