@@ -26,9 +26,7 @@ mutable struct Transaction
         finalizer(obj) do tx
             if !tx._closed
                 tx._closed = true
-                if FFI.transaction_is_open(tx.handle)
-                    FFI.transaction_drop_sync(tx.handle)
-                end
+                FFI.transaction_drop_sync(tx.handle)
             end
         end
         obj
@@ -97,9 +95,9 @@ end
 function _close_sync(tx::Transaction)
     tx._closed && return
     tx._closed = true
-    if FFI.transaction_is_open(tx.handle)
-        FFI.transaction_drop_sync(tx.handle)
-    end
+    # transaction_drop_sync closes (no-op if already closed) and frees the handle.
+    # Safe to call even when transaction_is_open returns false (e.g. after rollback).
+    FFI.transaction_drop_sync(tx.handle)
 end
 
 # ─── High-level do-block API ─────────────────────────────────────────────────

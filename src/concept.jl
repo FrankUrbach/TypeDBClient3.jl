@@ -721,7 +721,7 @@ function column_names(row::ConceptRow)::Vector{String}
             cstr = FFI.string_iterator_next(iter)
             check_and_throw()
             cstr == C_NULL && break
-            push!(names, typedb_string(cstr))
+            push!(names, typedb_owned_string(cstr))
         end
     finally
         FFI.string_iterator_drop(iter)

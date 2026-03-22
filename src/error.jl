@@ -36,6 +36,10 @@ function check_and_throw()
     code = code_cstr == C_NULL ? "" : unsafe_string(code_cstr)
     msg  = msg_cstr  == C_NULL ? "" : unsafe_string(msg_cstr)
 
+    # error_code / error_message return owned CStrings via release_string(); free them.
+    code_cstr == C_NULL || FFI.string_free(code_cstr)
+    msg_cstr  == C_NULL || FFI.string_free(msg_cstr)
+
     FFI.error_drop(err_ptr)
     throw(TypeDBError(code, msg))
 end
