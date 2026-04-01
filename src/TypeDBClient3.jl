@@ -1,31 +1,9 @@
 module TypeDBClient3
 
-# ─── Load deps (provides `libtypedb` and `check_deps`) ────────────────────────
-using Artifacts, Libdl, Dates
+# ─── Load deps ────────────────────────────────────────────────────────────────
+using TypeDBDriverClib_jll, Dates
 
-const _ARTIFACTS_TOML = joinpath(@__DIR__, "..", "Artifacts.toml")
-include_dependency(_ARTIFACTS_TOML)   # invalidate precompile cache when Artifacts.toml changes
-
-function _find_libtypedb()
-    isfile(_ARTIFACTS_TOML) || return ""
-    hash = artifact_hash("TypeDBClient3_jll", _ARTIFACTS_TOML)
-    hash === nothing && return ""
-    artifact_exists(hash) || return ""
-    dir = artifact_path(hash)
-    joinpath(dir, "lib", "libtypedb_driver_clib.$(Libdl.dlext)")
-end
-
-const libtypedb = _find_libtypedb()
-
-function check_deps()
-    isempty(libtypedb) &&
-        error("TypeDB driver artifact not found.\n" *
-              "Run `Pkg.build(\"TypeDBClient3\")` after setting " *
-              "TYPEDB_DRIVER_SRC or TYPEDB_DRIVER_LIB.")
-    isfile(libtypedb) ||
-        error("TypeDB driver library not found at: $(libtypedb)")
-    Libdl.dlopen(libtypedb)
-end
+const libtypedb = TypeDBDriverClib_jll.libtypedb_driver_clib
 
 # ─── Handle type aliases (Ptr{Cvoid} for every opaque C struct) ────────────────
 const TypeDBDriverHandle          = Ptr{Cvoid}
@@ -71,12 +49,7 @@ function init_logging()
 end
 
 function __init__()
-    try
-        check_deps()
-    catch err
-        @warn "TypeDBClient3: library check failed – $(err)\n" *
-              "Run `Pkg.build(\"TypeDBClient3\")` to rebuild."
-    end
+    TypeDBDriverClib_jll.__init__()
 end
 
 end # module TypeDBClient3
