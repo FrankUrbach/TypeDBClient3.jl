@@ -6,8 +6,8 @@ on:
   pull_request:
     branches: [master]
 
-# Oldest TypeDB release whose C API is compatible with this client.
-# Update when the client starts using symbols from a newer release.
+# Oldest TypeDB server release compatible with this client.
+# Update when the client starts requiring behaviour from a newer release.
 env:
   MIN_TYPEDB_VERSION: "3.8.1"
 
@@ -71,38 +71,6 @@ jobs:
 
       - uses: julia-actions/cache@v2
 
-      # ── Download the C shared library that matches the server version ────────
-      - name: Download C library (Linux)
-        if: runner.os == 'Linux'
-        shell: bash
-        run: |
-          v="${{ matrix.typedb-version }}"
-          url="https://dl.cloudsmith.io/public/typedb/public-release/raw/names/typedb-driver-clib-linux-x86_64/versions/${v}/typedb-driver-clib-linux-x86_64-${v}.tar.gz"
-          mkdir -p "$RUNNER_TEMP/typedb-lib"
-          curl -fsSL "$url" | tar -xz -C "$RUNNER_TEMP/typedb-lib"
-
-      - name: Download C library (macOS)
-        if: runner.os == 'macOS'
-        shell: bash
-        run: |
-          v="${{ matrix.typedb-version }}"
-          url="https://dl.cloudsmith.io/public/typedb/public-release/raw/names/typedb-driver-clib-mac-arm64/versions/${v}/typedb-driver-clib-mac-arm64-${v}.zip"
-          mkdir -p "$RUNNER_TEMP/typedb-lib"
-          curl -fsSL -o "$RUNNER_TEMP/typedb-clib.zip" "$url"
-          unzip -q "$RUNNER_TEMP/typedb-clib.zip" -d "$RUNNER_TEMP/typedb-lib"
-
-      # ── Build Julia package ──────────────────────────────────────────────────
-      - name: Build Julia package
-        shell: bash
-        run: |
-          if [[ "$RUNNER_OS" == "Linux" ]]; then
-            LIB=$(find "$RUNNER_TEMP/typedb-lib" -name "libtypedb_driver_clib.so" | head -1)
-          else
-            LIB=$(find "$RUNNER_TEMP/typedb-lib" -name "libtypedb_driver_clib.dylib" | head -1)
-          fi
-          echo "Found C library: $LIB"
-          TYPEDB_DRIVER_LIB="$LIB" julia --project -e 'using Pkg; Pkg.build("TypeDBClient3")'
-
       # ── Start TypeDB server (in background so unit tests run concurrently) ───
       - name: Start TypeDB (Linux – Docker)
         if: runner.os == 'Linux'
@@ -159,7 +127,7 @@ jobs:
         shell: bash
         run: cat "$RUNNER_TEMP/typedb-server.log" 2>/dev/null || echo "(no log found)"
 
-  # ── Windows – experimental (failures do not block CI) ────────────────────────
+  # ── Windows – experimental (unit tests only, failures do not block CI) ───────
   test-windows:
     name: test (windows-latest, TypeDB ${{ matrix.typedb-version }}) [experimental]
     needs: get-typedb-versions
@@ -182,24 +150,6 @@ jobs:
       - name: Experimental notice
         shell: bash
         run: echo "::notice::Windows support is experimental (unit tests only). Failures do not block CI."
-
-      # ── Download the Windows C DLL ───────────────────────────────────────────
-      - name: Download C library (Windows)
-        shell: bash
-        run: |
-          v="${{ matrix.typedb-version }}"
-          url="https://dl.cloudsmith.io/public/typedb/public-release/raw/names/typedb-driver-clib-windows-x86_64/versions/${v}/typedb-driver-clib-windows-x86_64-${v}.zip"
-          mkdir -p "$RUNNER_TEMP/typedb-lib"
-          curl -fsSL -o "$RUNNER_TEMP/typedb-clib.zip" "$url"
-          unzip -q "$RUNNER_TEMP/typedb-clib.zip" -d "$RUNNER_TEMP/typedb-lib"
-
-      # ── Build Julia package ──────────────────────────────────────────────────
-      - name: Build Julia package
-        shell: bash
-        run: |
-          LIB=$(find "$RUNNER_TEMP/typedb-lib" -name "typedb_driver_clib.dll" | head -1)
-          echo "Found C library: $LIB"
-          TYPEDB_DRIVER_LIB="$LIB" julia --project -e 'using Pkg; Pkg.build("TypeDBClient3")'
 
       # ── Unit tests only (no TypeDB server available on Windows CI) ───────────
       - name: Unit tests
