@@ -8,16 +8,13 @@ TypeDBClient_2.jl is a Julia FFI client for TypeDB 3.x, wrapping the official C 
 
 ## Commands
 
-### Build (register the native library as an artifact)
+### Build
+
+No manual build step required. The native library is provided by
+`TypeDBDriverClib_jll` and installed automatically via Pkg:
 
 ```bash
-# Option A – pre-built library
-export TYPEDB_DRIVER_LIB=/path/to/libtypedb_driver_clib.dylib
-julia -e 'using Pkg; Pkg.build("TypeDBClient")'
-
-# Option B – build from source (requires Rust/Cargo)
-export TYPEDB_DRIVER_SRC=/path/to/typedb-driver
-julia -e 'using Pkg; Pkg.build("TypeDBClient")'
+julia -e 'using Pkg; Pkg.add("TypeDBClient3")'
 ```
 
 ### Run Tests
@@ -61,7 +58,7 @@ libtypedb_driver_clib  (.dylib / .so / .dll)
 
 **Transaction Do-Block**: `transaction(driver, "dbname", TransactionType.WRITE) do tx ... end` auto-commits WRITE/SCHEMA on clean return, and rolls back + rethrows on exception. READ transactions are closed without committing.
 
-**Artifact Resolution**: The library path is stored in `Artifacts.toml` as a content-addressed artifact. At module load (`__init__`), `_find_libtypedb()` reads the hash from `Artifacts.toml` and resolves the path. `deps/build.jl` registers the artifact.
+**Library Loading**: The native library is provided by `TypeDBDriverClib_jll` (registered in the Julia General registry). `libtypedb` is a module-level constant aliasing `TypeDBDriverClib_jll.libtypedb_driver_clib`. No manual build or artifact registration needed.
 
 ### File Load Order (TypeDBClient.jl)
 
