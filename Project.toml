@@ -1,6 +1,6 @@
 name = "TypeDBClient3"
 uuid = "e65b8614-ec10-4d8b-a9fb-bd44bc213d71"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Frank Urbach"]
 
 [deps]
