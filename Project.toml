@@ -1,11 +1,10 @@
 name = "TypeDBClient3"
 uuid = "e65b8614-ec10-4d8b-a9fb-bd44bc213d71"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["Frank Urbach"]
 
 [deps]
 Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
-Gherkin = "30f46725-be1c-4b6b-9edd-e96e9b6c9ac9"
 TypeDBDriverClib_jll = "cd6bae0c-b179-51b7-81cb-091010e4ec61"
 
 [compat]
