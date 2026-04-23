@@ -226,6 +226,9 @@ end
 
 # ─── Open transaction (single) ────────────────────────────────────────────────
 @step r"^connection open (read|write|schema) transaction for database: ([^;]+)$" function (ctx, type_name, db_name)
+    if CTX.transaction !== nothing && isopen(CTX.transaction)
+        close(CTX.transaction)
+    end
     CTX.transaction = _open_tx(strip(db_name), _tx_type_from_name(type_name))
 end
 

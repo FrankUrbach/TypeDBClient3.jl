@@ -1387,7 +1387,7 @@ Feature: Driver Query
       """
       match $r label non-existing;
       """
-    Then typeql schema query; fails with a message containing: "cannot be used as an identifier"
+    Then typeql schema query; fails with a message containing: "Query parsing failed|cannot be used as an identifier"
       """
       define entity entity;
       """

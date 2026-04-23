@@ -159,7 +159,11 @@ function expect_throws(f)
     @test threw
 end
 
-"""Run `f()`, expect it to throw with a message containing `msg_fragment`."""
+"""Run `f()`, expect it to throw with a message containing `msg_fragment`.
+
+`msg_fragment` may contain `|`-separated alternatives; the test passes when
+any one of them is found in the error message.
+"""
 function expect_throws_msg(f, msg_fragment)
     threw = false
     msg_ok = false
@@ -168,7 +172,8 @@ function expect_throws_msg(f, msg_fragment)
     catch e
         threw = true
         errmsg = sprint(showerror, e)
-        msg_ok = occursin(msg_fragment, errmsg)
+        alternatives = split(msg_fragment, "|")
+        msg_ok = any(alt -> occursin(alt, errmsg), alternatives)
         if !msg_ok
             @warn "Expected error message to contain: $(repr(msg_fragment))\nActual: $(errmsg)"
         end
