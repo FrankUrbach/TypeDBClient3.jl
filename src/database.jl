@@ -144,3 +144,39 @@ function database_type_schema(db::Database)::String
     cstr = @checkerr FFI.database_type_schema(db.handle)
     typedb_owned_string(cstr)
 end
+
+"""
+    export_database(db::Database, schema_path, data_path)
+
+Export the database to two files: a TypeQL schema file and a binary data file.
+
+Both paths must be writable by the TypeDB server process.
+"""
+function export_database(db::Database, schema_path::AbstractString, data_path::AbstractString)
+    GC.@preserve schema_path data_path begin
+        @checkerr FFI.database_export_to_file(
+            db.handle,
+            Base.unsafe_convert(Cstring, Base.cconvert(Cstring, schema_path)),
+            Base.unsafe_convert(Cstring, Base.cconvert(Cstring, data_path)))
+    end
+    nothing
+end
+
+"""
+    import_database(driver, name, schema_path, data_path)
+
+Create a new database named `name` and populate it from previously exported
+files (`schema_path` and `data_path`).  Throws if the database already exists
+or if the files are not readable by the TypeDB server process.
+"""
+function import_database(driver::TypeDBDriver, name::AbstractString,
+                         schema_path::AbstractString, data_path::AbstractString)
+    GC.@preserve name schema_path data_path begin
+        @checkerr FFI.databases_import_from_file(
+            driver.handle,
+            Base.unsafe_convert(Cstring, Base.cconvert(Cstring, name)),
+            Base.unsafe_convert(Cstring, Base.cconvert(Cstring, schema_path)),
+            Base.unsafe_convert(Cstring, Base.cconvert(Cstring, data_path)))
+    end
+    nothing
+end
