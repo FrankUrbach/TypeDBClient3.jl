@@ -64,6 +64,8 @@ export delete_database
 export database_name
 export database_schema
 export database_type_schema
+export export_database
+export import_database
 
 # ── Transactions ──────────────────────────────────────────────────────────────
 export transaction
