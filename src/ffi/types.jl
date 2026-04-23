@@ -17,6 +17,8 @@ const ConceptIterHandle           = Ptr{Cvoid}
 const ConceptHandle               = Ptr{Cvoid}
 const StringIterHandle            = Ptr{Cvoid}
 const ErrorHandle                 = Ptr{Cvoid}
+const UserHandle                  = Ptr{Cvoid}
+const UserIterHandle              = Ptr{Cvoid}
 
 # ─── TransactionType enum ───────────────────────────────────────────────────────
 # Mirrors the Rust `TransactionType` enum in the C driver.
