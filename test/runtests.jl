@@ -6,6 +6,7 @@ using TypeDBClient3
     include("unit/test_error.jl")
     include("unit/test_strings.jl")
     include("unit/test_concept.jl")
+    include("unit/test_user.jl")
 end
 
 # ─── Integration tests (require a running TypeDB server) ─────────────────────

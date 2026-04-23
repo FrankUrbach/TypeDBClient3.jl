@@ -23,6 +23,8 @@ const ConceptIterHandle           = Ptr{Cvoid}
 const ConceptHandle               = Ptr{Cvoid}
 const StringIterHandle            = Ptr{Cvoid}
 const ErrorHandle                 = Ptr{Cvoid}
+const UserHandle                  = Ptr{Cvoid}
+const UserIterHandle              = Ptr{Cvoid}
 
 # ─── Load sub-files in dependency order ────────────────────────────────────────
 include("ffi/types.jl")     # TransactionType, QueryType enums
@@ -34,6 +36,7 @@ include("database.jl")      # Database, DatabaseManager ops
 include("transaction.jl")   # Transaction, transaction do-block
 include("concept.jl")       # Concept, ConceptRow, QueryAnswer, iterators
 include("query.jl")         # query()
+include("user.jl")          # TypeDBUser, user management
 include("exports.jl")       # public exports
 
 # ─── Module initialiser ────────────────────────────────────────────────────────

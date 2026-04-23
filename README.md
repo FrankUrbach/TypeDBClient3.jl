@@ -194,7 +194,7 @@ query answers – is implemented and tested.
 
 - [x] Automatic binary installation via `TypeDBDriverClib_jll`
 - [x] Registration in the Julia General Registry (`Pkg.add("TypeDBClient3")`)
-- [ ] Full concept API (attribute values, type hierarchy traversal)
+- [x] User management API (`list_users`, `create_user`, `delete_user`, `update_user_password`, …)
 - [ ] Documentation (Documenter.jl)
 - [ ] Async query streaming *(not planned — use multiple parallel transactions with `@async`/`@sync` instead)*
 

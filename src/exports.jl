@@ -67,6 +67,17 @@ export database_type_schema
 export export_database
 export import_database
 
+# ── User management ───────────────────────────────────────────────────────────
+export TypeDBUser
+export list_users
+export contains_user
+export create_user
+export get_user
+export get_current_user
+export user_name
+export update_user_password
+export delete_user
+
 # ── Transactions ──────────────────────────────────────────────────────────────
 export transaction
 export open_transaction

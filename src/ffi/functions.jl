@@ -32,6 +32,8 @@ const StringIterHandle            = Ptr{Cvoid}
 const ErrorHandle                 = Ptr{Cvoid}
 const StringAndOptValueHandle     = Ptr{Cvoid}
 const StringAndOptValueIterHandle = Ptr{Cvoid}
+const UserHandle                  = Ptr{Cvoid}
+const UserIterHandle              = Ptr{Cvoid}
 
 # ─── C struct types for by-value FFI returns ─────────────────────────────────
 #
@@ -467,5 +469,41 @@ string_and_opt_value_drop(sav::StringAndOptValueHandle) =
 # string_free overload for Ptr{UInt8} (needed to free zone_name in DatetimeAndTimeZone)
 string_free(ptr::Ptr{UInt8}) =
     ccall((:string_free, libtypedb), Cvoid, (Ptr{UInt8},), ptr)
+
+# ─── User management ─────────────────────────────────────────────────────────
+
+users_all(driver::TypeDBDriverHandle) =
+    ccall((:users_all, libtypedb), UserIterHandle, (TypeDBDriverHandle,), driver)
+
+users_contains(driver::TypeDBDriverHandle, name::Cstring) =
+    ccall((:users_contains, libtypedb), Bool, (TypeDBDriverHandle, Cstring), driver, name)
+
+users_create(driver::TypeDBDriverHandle, name::Cstring, password::Cstring) =
+    ccall((:users_create, libtypedb), Cvoid,
+          (TypeDBDriverHandle, Cstring, Cstring), driver, name, password)
+
+users_get(driver::TypeDBDriverHandle, name::Cstring) =
+    ccall((:users_get, libtypedb), UserHandle, (TypeDBDriverHandle, Cstring), driver, name)
+
+users_get_current_user(driver::TypeDBDriverHandle) =
+    ccall((:users_get_current_user, libtypedb), UserHandle, (TypeDBDriverHandle,), driver)
+
+user_get_name(user::UserHandle) =
+    ccall((:user_get_name, libtypedb), Cstring, (UserHandle,), user)
+
+user_update_password(user::UserHandle, new_password::Cstring) =
+    ccall((:user_update_password, libtypedb), Cvoid, (UserHandle, Cstring), user, new_password)
+
+user_delete(user::UserHandle) =
+    ccall((:user_delete, libtypedb), Cvoid, (UserHandle,), user)
+
+user_drop(user::UserHandle) =
+    ccall((:user_drop, libtypedb), Cvoid, (UserHandle,), user)
+
+user_iterator_next(it::UserIterHandle) =
+    ccall((:user_iterator_next, libtypedb), UserHandle, (UserIterHandle,), it)
+
+user_iterator_drop(it::UserIterHandle) =
+    ccall((:user_iterator_drop, libtypedb), Cvoid, (UserIterHandle,), it)
 
 end # module FFI
