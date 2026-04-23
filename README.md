@@ -192,12 +192,11 @@ query answers – is implemented and tested.
 
 **Roadmap:**
 
-- [ ] Automatic binary installation via `TypeDBDriverClib_jll`
-      (pending Yggdrasil PR [#13229](https://github.com/JuliaPackaging/Yggdrasil/pull/13229))
-- [ ] Registration in the Julia General Registry (`Pkg.add("TypeDBClient3")`)
+- [x] Automatic binary installation via `TypeDBDriverClib_jll`
+- [x] Registration in the Julia General Registry (`Pkg.add("TypeDBClient3")`)
 - [ ] Full concept API (attribute values, type hierarchy traversal)
-- [ ] Async query streaming
 - [ ] Documentation (Documenter.jl)
+- [ ] Async query streaming *(not planned — use multiple parallel transactions with `@async`/`@sync` instead)*
 
 ## Contributing
 
